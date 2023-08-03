@@ -6,6 +6,7 @@ variable "is_production" {
 variable "project_id" {
   description = "ID of the project"
   type        = string
+  default = ""
 }
 
 variable "additional_tags" {
