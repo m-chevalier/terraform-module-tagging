@@ -25,7 +25,3 @@ locals {
   }
   common_tags = merge(local.default_tags, local.remote_tags)
 }
-
-output "common_tags" {
-  value = local.common_tags
-}
