@@ -1,4 +1,3 @@
-
 variable "is_production" {
   description = "Indicates if the environment is Production"
   type        = bool

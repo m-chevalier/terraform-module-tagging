@@ -19,9 +19,9 @@ data "http" "project_info" {
 locals {
   remote_tags = jsondecode(data.http.project_info.response_body)
   default_tags = {
-    Environment = var.is_production
+    Environment = var.is_production ? "True" : "False"
     Project     = var.project_id
-    
+    IaC = "Terraform"
   }
   common_tags = merge(local.default_tags, local.remote_tags)
 }
