@@ -4,7 +4,7 @@ L'appel au module se fait de la manière suivante.
 
 ```tf
 module "tags" {
-  source = "./tag_module"
+  source = "github.com/m-chevalier/terraform-module-tagging"
 
   is_production = true
   project_id    = "my-project"
