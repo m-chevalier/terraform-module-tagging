@@ -23,5 +23,5 @@ locals {
     Project     = var.project_id
     IaC = "Terraform"
   }
-  common_tags = merge(local.default_tags, local.remote_tags)
+  common_tags = merge(var.additional_tags, local.default_tags, local.remote_tags)
 }

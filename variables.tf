@@ -7,3 +7,9 @@ variable "project_id" {
   description = "ID of the project"
   type        = string
 }
+
+variable "additional_tags" {
+  description = "Additional tags"
+  type = map(string)
+  default = {}
+}
