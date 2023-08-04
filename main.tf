@@ -10,7 +10,7 @@ provider "aws" {
   region  = "eu-west-1"
 }
 
-data "aws_lambda_invocation" "example" {
+data "aws_lambda_invocation" "lambda_projectinfos" {
   function_name = var.project_info_lambda_name
 
   input = jsonencode({ projectId = local.valid_project_id ? var.project_id : data.aws_organizations_resource_tags.account[0].tags.ProjectID})
@@ -33,7 +33,7 @@ data "aws_organizations_resource_tags" "account" {
 locals {
   valid_project_id = var.project_id != ""
   remote_tags = {
-    for key, value in jsondecode(data.aws_lambda_invocation.example.result) :
+    for key, value in jsondecode(data.aws_lambda_invocation.lambda_projectinfos.result) :
     key => key == "Status" ? null : value
   }
   # We remove the status value because it's not a tag
