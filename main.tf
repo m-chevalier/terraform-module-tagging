@@ -1,26 +1,39 @@
 terraform {
   required_providers {
-    http = {
-      source = "hashicorp/http"
-      version = "3.4.0"
-    }
     aws = {
       version = "~> 5.10.0"
     }
   }
 }
 
-data "http" "project_info" {
-  url = "" # PUT LAMBDA URL HERE
-  request_body = jsonencode({ projectId = var.project_id})
-  # Optional request headers
-  request_headers = {
-    Accept = "application/json"
-  }
+provider "aws" {
+  region  = "eu-west-1"
+}
+
+# data "http" "project_info" {
+#   url = "" # PUT LAMBDA URL HERE
+#   request_body = jsonencode({ projectId = var.project_id})
+#   # Optional request headers
+#   request_headers = {
+#     Accept = "application/json"
+#   }
+
+#   lifecycle {
+#     postcondition {
+#       condition     = jsondecode(self.response_body).Status != "unknown-project-id"
+#       error_message = "Project id ${var.project_id} is not a valid project id."
+#     }
+#   }
+# }
+
+data "aws_lambda_invocation" "example" {
+  function_name = var.project_info_lambda_name
+
+  input = jsonencode({ projectId = var.project_id})
 
   lifecycle {
     postcondition {
-      condition     = jsondecode(self.response_body).Status != "unknown-project-id"
+      condition     = jsondecode(self.result).Status == "success"
       error_message = "Project id ${var.project_id} is not a valid project id."
     }
   }
@@ -36,7 +49,7 @@ data "aws_organizations_resource_tags" "account" {
 locals {
   valid_project_id = var.project_id != ""
   remote_tags = {
-    for key, value in jsondecode(data.http.project_info.response_body) :
+    for key, value in jsondecode(data.aws_lambda_invocation.example.result) :
     key => key == "Status" ? null : value
   }
   # We remove the status value because it's not a tag

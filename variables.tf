@@ -14,3 +14,9 @@ variable "additional_tags" {
   type = map(string)
   default = {}
 }
+
+variable "project_info_lambda_name" {
+  description = "Name of the lambda which will be called to get informations about the project"
+  type = string
+  default = "project-infos"
+}
