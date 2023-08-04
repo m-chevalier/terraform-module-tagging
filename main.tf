@@ -29,7 +29,7 @@ provider "aws" {
 data "aws_lambda_invocation" "example" {
   function_name = var.project_info_lambda_name
 
-  input = jsonencode({ projectId = var.project_id})
+  input = jsonencode({ projectId = local.valid_project_id ? var.project_id : data.aws_organizations_resource_tags.account[0].tags.ProjectID})
 
   lifecycle {
     postcondition {
