@@ -14,7 +14,13 @@ data "aws_lambda_invocation" "lambda_projectinfos" {
   function_name = var.project_info_lambda_name
 
   # We send either the projectID parameter or the default projectID set on the AWS account
-  input = jsonencode({ projectId = local.valid_project_id ? var.project_id : data.aws_organizations_resource_tags.account[0].tags.ProjectID})
+  # We also send owner varaible value in order to get the project manager email in case of empty string
+  input = jsonencode(
+    { 
+      projectId = local.valid_project_id ? var.project_id : data.aws_organizations_resource_tags.account[0].tags.ProjectID,
+      owner = var.owner
+    }
+    )
 
   lifecycle {
     postcondition {
@@ -47,6 +53,7 @@ locals {
     ProjectID   = local.valid_project_id ? var.project_id : data.aws_organizations_resource_tags.account[0].tags.ProjectID
     IaC         = "Terraform"
     Requester = data.aws_caller_identity.current.arn
+    Owner     = var.owner
   }
 
   #We merge the default tags with the tags we obtained from the lambda 

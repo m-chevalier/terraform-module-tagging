@@ -9,6 +9,12 @@ variable "project_id" {
   default = ""
 }
 
+variable "owner" {
+  description = "Email of the manager of the resource"
+  type = string
+  default = ""
+}
+
 variable "additional_tags" {
   description = "Additional tags"
   type = map(string)
