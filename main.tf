@@ -42,7 +42,6 @@ locals {
 
   # We set the remote tags
   remote_tags = {
-    ProjectName = local.lambda_result.projectName
     Owner       = var.owner == "" ? local.lambda_result.owner : var.owner
   }
   
