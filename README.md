@@ -1,16 +1,21 @@
 # Utilisation du module
 
-L'appel au module se fait de la manière suivante.
+La manière la plus rapide d'utiliser le module est la suivante :
 
 ```tf
 module "tags" {
   source = "github.com/m-chevalier/terraform-module-tagging"
-
   is_production = true 
-  project_id    = "workday-project-id"
-  owner         = "exemple@domaine.com"
 }
 ```
+
+Les paramètres sont les suivants :
+|Nom|Obligatoire|Valeur|Valeur par défaut|
+|-|-|-|-|
+|is_production|Oui|true/false|Pas de valeur par défaut|
+|project_id|Non|Chaîne de caractères représentant l'identifiant du projet dans Workday|Tag par défaut associé au compte|
+|owner|Non|Chaîne de caractères contenant l'email du responsable de la ressource|Email associé au projet dans Workday|
+|additional_tags|Non|Dictionnaire de tags qui seront ajoutés au résultat du module|`{}`|
 
 ## Mettre les tags communs sur toutes les ressources
 
@@ -42,8 +47,7 @@ resource "aws_s3_bucket" "example" {
 module "tags" {
   source = "github.com/m-chevalier/terraform-module-tagging"
 
-  is_production = true
-  project_id    = "my-project-id"
+  is_production = false
   additional_tags = {
     Nom         = "valeur"
   }
