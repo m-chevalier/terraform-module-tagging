@@ -4,7 +4,7 @@ La manière la plus rapide d'utiliser le module est la suivante :
 
 ```tf
 module "tags" {
-  source = "github.com/m-chevalier/terraform-module-tagging"
+  source = "REMPLACER PAR LE REPO GIT"
   is_production = true 
 }
 ```
@@ -41,7 +41,7 @@ resource "aws_s3_bucket" "example" {
 }
 ```
 
-## Ajouter des tags supplémentaires au module
+## Ajouter des tags supplémentaires en plus de ceux du module
 
 ```tf
 module "tags" {

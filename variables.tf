@@ -1,28 +1,28 @@
 variable "is_production" {
-  description = "Indicates if the environment is Production"
+  description = "Indique si la ressource fait partie d'un environnement de production"
   type        = bool
 }
 
 variable "project_id" {
-  description = "ID of the project"
+  description = "Identifiant du projet issu de Workday"
   type        = string
   default = ""
 }
 
 variable "owner" {
-  description = "Email of the manager of the resource"
+  description = "Email du responsable de la ressource"
   type = string
   default = ""
 }
 
 variable "additional_tags" {
-  description = "Additional tags"
+  description = "Tags supplémentaires"
   type = map(string)
   default = {}
 }
 
 variable "project_info_lambda_name" {
-  description = "Name of the lambda which will be called to get informations about the project"
+  description = "Nom de la lambda qui va être appelée pour vérifier le projectID et récupérer le Owner depuis Workday"
   type = string
   default = "project-infos"
 }
